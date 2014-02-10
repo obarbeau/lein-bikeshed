@@ -50,9 +50,9 @@
 (defn long-lines
   "Complain about lines longer than <max-line-length> characters.
   max-line-length defaults to 80."
-  [all-dirs & {:keys [max-line-length] :or {max-line-length 80}}]
+  [all-dirs & {:keys [max-line-length] :or {max-line-length "80"}}]
   (printf "\nChecking for lines longer than %s characters." max-line-length)
-  (let [max-line-length (inc max-line-length)
+  (let [max-line-length (inc (read-string max-line-length))
         cmd (str "find " all-dirs " -name "
                  "'*.clj' | xargs egrep -H -n '^.{" max-line-length ",}$'")
         out (:out (clojure.java.shell/sh "bash" "-c" cmd))
